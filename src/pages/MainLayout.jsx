@@ -9,10 +9,10 @@ const MainLayout = () => {
       <Navbar />
       <div className="flex flex-1 mt-10 overflow-hidden">
         <Sidebar />
-      </div>
       <main className="flex-1 p-6 overflow-y-hidden">
         <Outlet />
       </main>
+      </div>
     </div>
   );
 };
