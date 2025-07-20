@@ -16,35 +16,41 @@ const Tasks = () => {
   
 function handleTaskAdd() {
   if (editIndex !== null) {
-    // Editing existing task
     const updatedTasks = [...tasks];
-    updatedTasks[editIndex] = editValue;
+    updatedTasks[editIndex].name = editValue;
     setTasks(updatedTasks);
     setEditIndex(null);
     setEditValue("");
   } else {
-    // Adding new task
     if (name.trim() !== "") {
-      setTasks([...tasks, name]);
+      setTasks([...tasks, { name, completed: false }]);
       setName("");
     }
   }
   setShowModal(false);
 }
 
+
   function handleDeleteTask(indexToDelete) {
     const newTasks = tasks.filter((_, i) => i !== indexToDelete);
     setTasks(newTasks);
   }
 
-  function handleEditTask(index) {
+function handleEditTask(index) {
   setEditIndex(index);
-  setEditValue(tasks[index]);
+  setEditValue(tasks[index].name);
   setShowModal(true);
 }
 
-  
-  localStorage.setItem("tasks",JSON.stringify(tasks))
+
+   localStorage.setItem("tasks",JSON.stringify(tasks))
+
+  const handleToggleComplete = (index) => {
+  const updated = [...tasks];
+  updated[index].completed = !updated[index].completed;
+  setTasks(updated);
+};
+
   
   return (
     <div className='w-full'>
@@ -58,9 +64,10 @@ function handleTaskAdd() {
       <div className='w-full mt-4 space-y-4'>
         {tasks.map((task,index)=>(
           <div key={index} className='border w-full flex items-center p-6'>
-          {/* <input type="checkbox" name="" id="" className='mt-1 w-5 h-5 mr-2' /> */}
+          <input type="checkbox" onChange={() => handleToggleComplete(index)} checked={task.completed} className='mt-1 w-5 h-5 mr-2' />
+          
           <div className='flex-1'>
-            <h1 className='font-medium text-2xl'>{task}</h1>
+            <h1 className={`font-medium text-2xl ${task.completed ? 'line-through text-gray-500' : ''}`}> {task.name}</h1>
           </div>
           <div className='flex gap-4'>
             <button onClick={()=> handleEditTask(index)} className='cursor-pointer'><Pencil className='text-blue-600'/></button>
