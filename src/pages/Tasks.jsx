@@ -63,11 +63,11 @@ function handleEditTask(index) {
       {/* showing tasks */}
       <div className='w-full mt-4 space-y-4'>
         {tasks.map((task,index)=>(
-          <div key={index} className='border w-full flex items-center p-6'>
+          <div key={index} className='border w-full flex items-center p-6 rounded-md'>
           <input type="checkbox" onChange={() => handleToggleComplete(index)} checked={task.completed} className='mt-1 w-5 h-5 mr-2' />
           
           <div className='flex-1'>
-            <h1 className={`font-medium text-2xl ${task.completed ? 'line-through text-gray-500' : ''}`}> {task.name}</h1>
+            <h1 className={`font-medium text-2xl  ${task.completed ? 'line-through text-gray-500' : ''}`}> {task.name}</h1>
           </div>
           <div className='flex gap-4'>
             <button onClick={()=> handleEditTask(index)} className='cursor-pointer'><Pencil className='text-blue-600'/></button>
